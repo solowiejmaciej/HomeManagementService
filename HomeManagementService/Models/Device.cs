@@ -7,8 +7,12 @@ public class Device
 {
     public Device() => StartClock();
 
+    public required int Id { get; set; }
+    public required string MacAddress { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
     public required string Alias { get; set; }
-    public required string Ip { get; set; }
+    public required string IpAddress { get; set; }
     public EDeviceState Status { get; private set; }
     public EDeviceState PreviousStatus { get; private set; } = EDeviceState.Unknown;
     public TimeSpan ElapsedTime => GetElapsedTime();
@@ -43,7 +47,7 @@ public class Device
         Ping ping = new Ping();
         try
         {
-            var result = await ping.SendPingAsync(Ip);
+            var result = await ping.SendPingAsync(IpAddress);
             if (result.Status == IPStatus.Success)
             {
                 SetStatusToOnline();

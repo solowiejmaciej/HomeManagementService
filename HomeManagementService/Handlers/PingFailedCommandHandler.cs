@@ -8,15 +8,12 @@ namespace ReportingServiceWorker.Handlers;
 public class PingFailedCommandHandler : IRequestHandler<PingFailedCommand>
 {
     private readonly ILogger<PingFailedCommandHandler> _logger;
-    private readonly INotificationApiClient _notificationApiClient;
 
     public PingFailedCommandHandler(
-        ILogger<PingFailedCommandHandler> logger,
-        INotificationApiClient notificationApiClient
+        ILogger<PingFailedCommandHandler> logger
         )
     {
         _logger = logger;
-        _notificationApiClient = notificationApiClient;
     }
     public async Task Handle(PingFailedCommand request, CancellationToken cancellationToken)
     {
