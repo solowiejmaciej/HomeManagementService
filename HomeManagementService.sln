@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeManagementService", "HomeManagementService\HomeManagementService.csproj", "{96B02D5D-B880-4573-888A-527D9A6E066C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeManagementService", "src\HomeManagementService.csproj", "{96B02D5D-B880-4573-888A-527D9A6E066C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
