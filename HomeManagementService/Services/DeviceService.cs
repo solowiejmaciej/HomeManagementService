@@ -1,24 +1,30 @@
-using AutoMapper;
-using Microsoft.Extensions.Options;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models.Dto;
-using ReportingServiceWorker.Models.Options;
+#region
 
-namespace ReportingServiceWorker.Services;
+using AutoMapper;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Models.Dto;
+using HomeManagementService.Models.Options;
+using Microsoft.Extensions.Options;
+
+#endregion
+
+namespace HomeManagementService.Services;
 
 public class DeviceService : IDeviceService
 {
     private readonly IOptions<Devices> _devices;
     private readonly IMapper _mapper;
+    private readonly IAutomationExecutor _automationExecutor;
 
     public DeviceService(
         IOptions<Devices> devices,
-        IMapper mapper
-        )
+        IMapper mapper, IAutomationExecutor automationExecutor)
     {
         _devices = devices;
         _mapper = mapper;
+        _automationExecutor = automationExecutor;
     }
+
     public Task<List<DeviceDto>> GetAll()
     {
         var configuredDevices = _devices.Value.List;

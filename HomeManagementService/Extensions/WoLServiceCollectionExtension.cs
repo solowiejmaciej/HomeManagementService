@@ -1,7 +1,12 @@
-using EasyWakeOnLan;
-using ReportingServiceWorker.Services;
+#region
 
-namespace ReportingServiceWorker.Extensions;
+using EasyWakeOnLan;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Services;
+
+#endregion
+
+namespace HomeManagementService.Extensions;
 
 public static class WoLServiceCollectionExtension
 {

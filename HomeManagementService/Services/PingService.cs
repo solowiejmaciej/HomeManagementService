@@ -1,10 +1,13 @@
-using System.Net.NetworkInformation;
-using Microsoft.Extensions.Options;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models;
-using ReportingServiceWorker.Models.Options;
+#region
 
-namespace ReportingServiceWorker.Services;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Models;
+using HomeManagementService.Models.Options;
+using Microsoft.Extensions.Options;
+
+#endregion
+
+namespace HomeManagementService.Services;
 
 public class PingService : IPingService
 {
@@ -12,7 +15,7 @@ public class PingService : IPingService
 
     public PingService(
         IOptions<Devices> devices
-        )
+    )
     {
         _devices = devices;
     }
@@ -20,10 +23,7 @@ public class PingService : IPingService
     public async Task<List<Device>> PingAsync()
     {
         var devices = _devices.Value.List;
-        foreach (var device in devices)
-        {
-           await device.PingAsync();
-        }
+        foreach (var device in devices) await device.PingAsync();
 
         return devices.ToList();
     }

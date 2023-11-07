@@ -1,14 +1,18 @@
-using System.Reflection;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models.Options;
-using ReportingServiceWorker.Services;
+#region
 
-namespace ReportingServiceWorker.Extensions;
+using System.Reflection;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Models.Options;
+using HomeManagementService.Services;
+
+#endregion
+
+namespace HomeManagementService.Extensions;
 
 public static class GeneralServiceCollectionExtension
 {
     public static void AddGeneralServiceCollection(this IServiceCollection services)
-    { 
+    {
         services.Configure<HostOptions>(options =>
         {
             options.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;

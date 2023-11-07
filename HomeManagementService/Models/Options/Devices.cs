@@ -1,4 +1,4 @@
-namespace ReportingServiceWorker.Models.Options;
+namespace HomeManagementService.Models.Options;
 
 public sealed record Devices
 {

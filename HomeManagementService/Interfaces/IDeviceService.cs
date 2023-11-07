@@ -1,6 +1,10 @@
-using ReportingServiceWorker.Models.Dto;
+#region
 
-namespace ReportingServiceWorker.Interfaces;
+using HomeManagementService.Models.Dto;
+
+#endregion
+
+namespace HomeManagementService.Interfaces;
 
 public interface IDeviceService
 {

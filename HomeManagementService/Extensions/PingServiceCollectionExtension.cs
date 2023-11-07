@@ -1,16 +1,20 @@
+#region
+
 using System.Net.NetworkInformation;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Services;
-using ReportingServiceWorker.Workers;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Services;
+using HomeManagementService.Workers;
 
-namespace ReportingServiceWorker.Extensions;
+#endregion
 
+namespace HomeManagementService.Extensions;
 
 public static class PingServiceCollectionExtension
 {
     public static void AddPingServiceCollection(this IServiceCollection services)
     {
         services.AddHostedService<PingWorker>();
+        services.AddHostedService<MqttKnobWorker>();
         services.AddSingleton<IPingService, PingService>();
         services.AddSingleton<Ping>();
     }

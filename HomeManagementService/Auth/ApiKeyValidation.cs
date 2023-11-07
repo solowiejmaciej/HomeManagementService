@@ -2,10 +2,14 @@
 
 #endregion
 
-using Microsoft.Extensions.Options;
-using ReportingServiceWorker.Models.Options;
+#region
 
-namespace ReportingServiceWorker.Auth;
+using HomeManagementService.Models.Options;
+using Microsoft.Extensions.Options;
+
+#endregion
+
+namespace HomeManagementService.Auth;
 
 public class ApiKeyValidation : IApiKeyValidation
 {
@@ -15,6 +19,7 @@ public class ApiKeyValidation : IApiKeyValidation
     {
         _authOptions = authOptions;
     }
+
     public bool IsValidApiKey(string userApiKey)
     {
         return userApiKey == _authOptions.Value.ApiKey;

@@ -5,17 +5,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["ReportingServiceWorker.csproj", "ReportingServiceWorker/"]
-RUN dotnet restore "ReportingServiceWorker/ReportingServiceWorker.csproj"
-WORKDIR "/src/ReportingServiceWorker"
+COPY ["HomeManagementService.csproj", "HomeManagementService/"]
+RUN dotnet restore "HomeManagementService/HomeManagementService.csproj"
+WORKDIR "/src/HomeManagementService"
 COPY . .
-RUN dotnet build "ReportingServiceWorker.csproj" -c Release -o /app/build
+RUN dotnet build "HomeManagementService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ReportingServiceWorker.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "HomeManagementService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ReportingServiceWorker.dll"]
+ENTRYPOINT ["dotnet", "HomeManagementService.dll"]
 

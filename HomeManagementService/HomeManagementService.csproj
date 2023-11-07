@@ -6,23 +6,32 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>dotnet-ReportingServiceWorker-D5CACC9B-E9C7-4222-AE47-9A232FD5159C</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <RootNamespace>ReportingServiceWorker</RootNamespace>
+        <RootNamespace>HomeManagementService</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-        <PackageReference Include="EasyWakeOnLan" Version="3.0.31" />
-        <PackageReference Include="Flurl.Http" Version="3.2.4" />
-        <PackageReference Include="MediatR" Version="12.1.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1"/>
+        <PackageReference Include="EasyWakeOnLan" Version="3.0.31"/>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0"/>
+        <PackageReference Include="Flurl.Http" Version="3.2.4"/>
+        <PackageReference Include="HueApi" Version="1.4.0"/>
+        <PackageReference Include="HueApi.ColorConverters" Version="1.0.0"/>
+        <PackageReference Include="M2Mqtt" Version="4.3.0" />
+        <PackageReference Include="MediatR" Version="12.1.1"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="7.0.13"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0"/>
-        <PackageReference Include="SSH.NET" Version="2023.0.0" />
+        <PackageReference Include="SSH.NET" Version="2023.0.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Hangfire.Dashboard.Basic.Authentication" Version="7.0.1"/>
+        <PackageReference Include="Hangfire.SqlServer" Version="1.8.5"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 </Project>

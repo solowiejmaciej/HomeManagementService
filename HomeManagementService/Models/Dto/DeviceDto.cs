@@ -1,4 +1,4 @@
-namespace ReportingServiceWorker.Models.Dto;
+namespace HomeManagementService.Models.Dto;
 
 public class DeviceDto
 {
@@ -8,5 +8,4 @@ public class DeviceDto
     public EDeviceState Status { get; set; }
     public TimeSpan ElapsedTime { get; set; }
     public DateTime LastDateStatusChanged { get; set; }
-
 }

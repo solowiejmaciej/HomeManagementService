@@ -1,9 +1,13 @@
-using MediatR;
-using ReportingServiceWorker.Handlers;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models;
+#region
 
-namespace ReportingServiceWorker.Workers;
+using HomeManagementService.Handlers;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Models;
+using MediatR;
+
+#endregion
+
+namespace HomeManagementService.Workers;
 
 public class PingWorker : BackgroundService
 {
@@ -15,7 +19,7 @@ public class PingWorker : BackgroundService
         ILogger<PingWorker> logger,
         IPingService pingService,
         IMediator mediator
-        )
+    )
     {
         _logger = logger;
         _pingService = pingService;
@@ -29,16 +33,12 @@ public class PingWorker : BackgroundService
             //_logger.LogInformation($"Device State: {DeviceState.Status}");
             var result = await _pingService.PingAsync();
             foreach (var device in result)
-            {
-                if (device.Status == EDeviceState.Online && device.Status != device.PreviousStatus) // Status changed from Offline to Online
-                {
+                if (device.Status == EDeviceState.Online &&
+                    device.Status != device.PreviousStatus) // Status changed from Offline to Online
                     await _mediator.Send(new PingSuccessfulCommand { Device = device }, stoppingToken);
-                }
-                else if (device.Status == EDeviceState.Offline && device.Status != device.PreviousStatus) // Status changed from Online to Offline
-                {
+                else if (device.Status == EDeviceState.Offline &&
+                         device.Status != device.PreviousStatus) // Status changed from Online to Offline
                     await _mediator.Send(new PingFailedCommand { Device = device }, stoppingToken);
-                }
-            }
             await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
         }
     }

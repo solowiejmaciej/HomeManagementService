@@ -1,9 +1,12 @@
-using Microsoft.Extensions.Options;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models.Clients;
-using ReportingServiceWorker.Models.Options;
+#region
 
-namespace ReportingServiceWorker.Factories;
+using HomeManagementService.Models.Options;
+using HueApi;
+using Microsoft.Extensions.Options;
+
+#endregion
+
+namespace HomeManagementService.Factories;
 
 public class HueClientFactory : IHueClientFactory
 {
@@ -11,16 +14,18 @@ public class HueClientFactory : IHueClientFactory
 
     public HueClientFactory(
         IOptions<HueOptions> hueOptions
-        )
+    )
     {
         _hueOptions = hueOptions;
     }
-    
-    public IHueClient CreateClient() => new HueClient(_hueOptions.Value.BridgeIp, _hueOptions.Value.Key);
-}
 
+    public LocalHueApi CreateClient()
+    {
+        return new LocalHueApi(_hueOptions.Value.BridgeIp, _hueOptions.Value.Key);
+    }
+}
 
 public interface IHueClientFactory
 {
-    IHueClient CreateClient();
+    LocalHueApi CreateClient();
 }

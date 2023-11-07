@@ -1,12 +1,12 @@
 #region
 
+using HomeManagementService.Auth;
+using HomeManagementService.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using ReportingServiceWorker.Auth;
-using ReportingServiceWorker.Services;
 
 #endregion
 
-namespace ReportingServiceWorker.Controllers;
+namespace HomeManagementService.Controllers;
 
 [ApiKey]
 [ApiController]
@@ -32,7 +32,7 @@ public class WolController : ControllerBase
         await _wolService.WakeUpAsync(id);
         return Ok();
     }
-    
+
     [HttpPost("Shutdown/{id:int}")]
     public async Task<IActionResult> ShutdownPc(int id)
     {
@@ -40,5 +40,4 @@ public class WolController : ControllerBase
         await _wolService.Shutdown(id);
         return Ok();
     }
-    
 }

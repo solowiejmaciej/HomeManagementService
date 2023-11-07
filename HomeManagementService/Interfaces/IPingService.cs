@@ -1,7 +1,10 @@
-using System.Net.NetworkInformation;
-using ReportingServiceWorker.Models;
+#region
 
-namespace ReportingServiceWorker.Interfaces;
+using HomeManagementService.Models;
+
+#endregion
+
+namespace HomeManagementService.Interfaces;
 
 public interface IPingService
 {

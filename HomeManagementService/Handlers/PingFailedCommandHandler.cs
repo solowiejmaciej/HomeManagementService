@@ -1,9 +1,11 @@
-using System.Diagnostics;
-using MediatR;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models;
+#region
 
-namespace ReportingServiceWorker.Handlers;
+using HomeManagementService.Models;
+using MediatR;
+
+#endregion
+
+namespace HomeManagementService.Handlers;
 
 public class PingFailedCommandHandler : IRequestHandler<PingFailedCommand>
 {
@@ -11,10 +13,11 @@ public class PingFailedCommandHandler : IRequestHandler<PingFailedCommand>
 
     public PingFailedCommandHandler(
         ILogger<PingFailedCommandHandler> logger
-        )
+    )
     {
         _logger = logger;
     }
+
     public async Task Handle(PingFailedCommand request, CancellationToken cancellationToken)
     {
         //Status change detected

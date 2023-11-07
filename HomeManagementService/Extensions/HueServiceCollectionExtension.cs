@@ -1,15 +1,18 @@
-using ReportingServiceWorker.Factories;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models.Clients;
-using ReportingServiceWorker.Services;
+#region
 
-namespace ReportingServiceWorker.Extensions;
+using HomeManagementService.Factories;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Services;
+
+#endregion
+
+namespace HomeManagementService.Extensions;
 
 public static class HueServiceCollectionExtension
 {
     public static void AddHueServiceCollection(this IServiceCollection services)
     {
-        services.AddScoped<IHueClientFactory, HueClientFactory>();
-        services.AddScoped<IHueService, HueService>();
+        services.AddSingleton<IHueClientFactory, HueClientFactory>();
+        services.AddSingleton<IHueService, HueService>();
     }
 }

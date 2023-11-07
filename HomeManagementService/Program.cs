@@ -1,12 +1,13 @@
-using System.Net.NetworkInformation;
-using System.Reflection;
-using EasyWakeOnLan;
-using ReportingServiceWorker.Auth;
-using ReportingServiceWorker.Extensions;
-using ReportingServiceWorker.Interfaces;
-using ReportingServiceWorker.Models.Options;
-using ReportingServiceWorker.Services;
-using ReportingServiceWorker.Workers;
+#region
+
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using HomeManagementService.Extensions;
+using HomeManagementService.Handlers;
+using HomeManagementService.Middleware;
+using HomeManagementService.Services;
+
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +19,21 @@ builder.Services.AddPingServiceCollection();
 builder.Services.AddAuthServiceCollection();
 builder.Services.AddWoLServiceCollection();
 builder.Services.AddHueServiceCollection();
+builder.Services.AddHangfireServiceCollection(builder.Configuration);
+builder.Services.AddAutomationServiceCollection();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<AddAutomationCommand>, AddAutomationCommandValidator>();
+builder.Services.AddScoped<IValidator<LocationCommand>, LocationCommandValidator>();
+builder.Services.AddScoped<IValidator<ManualTriggerAutomationCommand>, ManualTriggerAutomationCommandValidator>();
+builder.Services.AddScoped<IValidator<RemoveAutomationCommand>, RemoveAutomationCommandValidator>();
+builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
 
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseHangfire(app.Configuration);
 app.UseSwagger();
 app.UseSwaggerUI();
 

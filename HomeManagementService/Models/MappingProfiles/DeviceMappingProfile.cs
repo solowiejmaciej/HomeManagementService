@@ -1,8 +1,11 @@
-using AutoMapper;
-using ReportingServiceWorker.Models.Dto;
-using ReportingServiceWorker.Models.Options;
+#region
 
-namespace ReportingServiceWorker.Models.MappingProfiles;
+using AutoMapper;
+using HomeManagementService.Models.Dto;
+
+#endregion
+
+namespace HomeManagementService.Models.MappingProfiles;
 
 public class DeviceMappingProfile : Profile
 {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 #endregion
 
-namespace ReportingServiceWorker.Auth;
+namespace HomeManagementService.Auth;
 
 public class ApiKeyAttribute : ServiceFilterAttribute
 {

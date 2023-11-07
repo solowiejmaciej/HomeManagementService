@@ -4,12 +4,12 @@ using Microsoft.OpenApi.Models;
 
 #endregion
 
-namespace ReportingServiceWorker.Extensions;
+namespace HomeManagementService.Extensions;
 
 public static class SwaggerServiceCollectionExtension
 {
     public static void AddSwaggerServiceCollection(this IServiceCollection services)
-    { 
+    {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {

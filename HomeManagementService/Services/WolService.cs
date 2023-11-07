@@ -1,13 +1,14 @@
 #region
 
 using EasyWakeOnLan;
+using HomeManagementService.Interfaces;
+using HomeManagementService.Models.Options;
 using Microsoft.Extensions.Options;
 using Renci.SshNet;
-using ReportingServiceWorker.Models.Options;
 
 #endregion
 
-namespace ReportingServiceWorker.Services;
+namespace HomeManagementService.Services;
 
 public class WolService : IWolService
 {
@@ -44,10 +45,4 @@ public class WolService : IWolService
         _logger.LogInformation("PC Shut down");
         return Task.CompletedTask;
     }
-}
-
-public interface IWolService
-{
-    Task WakeUpAsync(int id);
-    Task Shutdown(int id);
 }

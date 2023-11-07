@@ -1,11 +1,18 @@
+#region
+
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 
-namespace ReportingServiceWorker.Models;
+#endregion
+
+namespace HomeManagementService.Models;
 
 public class Device
 {
-    public Device() => StartClock();
+    public Device()
+    {
+        StartClock();
+    }
 
     public required int Id { get; set; }
     public required string MacAddress { get; set; }
@@ -19,10 +26,16 @@ public class Device
     public DateTime LastDateStatusChanged { get; private set; }
     private readonly Stopwatch _stopWatch = new();
 
-    private void StartClock() => _stopWatch.Start();
+    private void StartClock()
+    {
+        _stopWatch.Start();
+    }
 
-    private TimeSpan GetElapsedTime() => _stopWatch.Elapsed;
-    
+    private TimeSpan GetElapsedTime()
+    {
+        return _stopWatch.Elapsed;
+    }
+
     private void SetStatusToOnline()
     {
         PreviousStatus = Status;
@@ -30,7 +43,6 @@ public class Device
         Status = EDeviceState.Online;
         _stopWatch.Restart();
         LastDateStatusChanged = DateTime.Now;
-
     }
 
 
@@ -42,20 +54,17 @@ public class Device
         _stopWatch.Restart();
         LastDateStatusChanged = DateTime.Now;
     }
+
     public async Task PingAsync()
     {
-        Ping ping = new Ping();
+        var ping = new Ping();
         try
         {
             var result = await ping.SendPingAsync(IpAddress);
             if (result.Status == IPStatus.Success)
-            {
                 SetStatusToOnline();
-            }
             else
-            {
                 SetStatusToOffline();
-            }
         }
         catch (Exception e)
         {
