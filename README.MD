@@ -5,7 +5,7 @@ This is the service that manages your smart home.
 - Managing the devices
 - Creating and managing automation rules
 - Control Philips Hue lights
-- Configure the SmartKnob ESP32 device from this [repository](repo-link)
+- Configure the SmartKnob ESP32 device from this [repository](https://github.com/solowiejmaciej/SmartKnob)
 
 ## Technologies
 - ASP.NET Core 7.0
