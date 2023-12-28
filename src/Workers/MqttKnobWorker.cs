@@ -1,6 +1,9 @@
 using System.Text;
 using HomeManagementService.Interfaces;
 using HomeManagementService.Models;
+using HomeManagementService.Models.MqttMessages;
+using HomeManagementService.Models.Options;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -10,36 +13,45 @@ namespace HomeManagementService.Workers;
 public class MqttKnobWorker : BackgroundService
 {
     private readonly IHueService _hueService;
+    private readonly IOptions<MqttOptions> _mqttOptions;
+    private readonly TemperatureInfo _temperatureInfo;
 
     public MqttKnobWorker(
-        IHueService hueService
+        IHueService hueService,
+        IOptions<MqttOptions> mqttOptions,
+        TemperatureInfo temperatureInfo
         )
     {
         _hueService = hueService;
+        _mqttOptions = mqttOptions;
+        _temperatureInfo = temperatureInfo;
     }
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        // Define your MQTT broker address and port
-        string brokerAddress = "192.168.1.138";
-        int brokerPort = 1883; // Default MQTT port
-
-        // Create an MQTT client instance
+        var brokerAddress = _mqttOptions.Value.BrokerAddress;
+        var brokerPort = _mqttOptions.Value.BrokerPort;
+        var buttonTopic = _mqttOptions.Value.ButtonTopic;
+        var temperatureTopic = _mqttOptions.Value.TemperatureTopic;
+        var rotaryTopic = _mqttOptions.Value.RotaryTopic;
+        var clientId = _mqttOptions.Value.ClientId;
+        
         MqttClient client = new MqttClient(brokerAddress, brokerPort, false, MqttSslProtocols.None, null, null);
 
-        // Specify your MQTT client ID
-        string clientId = Guid.NewGuid().ToString();
         client.Connect(clientId);
+        
+        client.Subscribe(new string[] 
+                { buttonTopic, temperatureTopic, rotaryTopic, }, 
+            new byte[] { 
+                MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, 
+                MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
+                MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE
+            }
+        );
 
-        // Subscribe to the MQTT topic(s) you are interested in
-        string[] topics = { "/home/sensors/button", "/home/sensors/rotory" };
-        byte[] qosLevels = { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE, MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE };
-        client.Subscribe(topics, qosLevels);
-
-        // Define a callback for handling received messages
         client.MqttMsgPublishReceived += (sender, e) =>
         {
 
-            if (e.Topic == "/home/sensors/button")
+            if (e.Topic == buttonTopic)
             {
                 var message = Encoding.UTF8.GetString(e.Message);
                 var meessageInJson = JsonConvert.DeserializeObject<ButtonMessage>(message);
@@ -53,7 +65,7 @@ public class MqttKnobWorker : BackgroundService
                 }
             }
             
-            if (e.Topic == "/home/sensors/rotory")
+            if (e.Topic == rotaryTopic)
             {
                 var message = Encoding.UTF8.GetString(e.Message);
                 var meessageInJson = JsonConvert.DeserializeObject<RotaryMessage>(message);
@@ -64,7 +76,16 @@ public class MqttKnobWorker : BackgroundService
 
             }
             
-            Console.WriteLine($"Received message on topic '{e.Topic}': {Encoding.UTF8.GetString(e.Message)}");
+            if (e.Topic == temperatureTopic)
+            {
+                var message = Encoding.UTF8.GetString(e.Message);
+                var meessageInJson = JsonConvert.DeserializeObject<TemperatureMessage>(message);
+                _temperatureInfo.Temperature = meessageInJson.temperature;
+                _temperatureInfo.Humidity = meessageInJson.humidity;
+                _temperatureInfo.LastChanged = meessageInJson.timeStamp;
+            }
+            
+            //Console.WriteLine($"Received message on topic '{e.Topic}': {Encoding.UTF8.GetString(e.Message)}");
         };
         
     }

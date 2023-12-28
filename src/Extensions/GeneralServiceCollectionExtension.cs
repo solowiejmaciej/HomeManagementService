@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using HomeManagementService.Interfaces;
+using HomeManagementService.Models;
 using HomeManagementService.Models.Options;
 using HomeManagementService.Services;
 
@@ -22,7 +23,9 @@ public static class GeneralServiceCollectionExtension
         services.AddOptions<Devices>().BindConfiguration("Devices");
         services.AddOptions<AuthOptions>().BindConfiguration("AuthOptions");
         services.AddOptions<HueOptions>().BindConfiguration("HueOptions");
+        services.AddOptions<MqttOptions>().BindConfiguration("MqttOptions");
         services.AddScoped<IDeviceService, DeviceService>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddSingleton<TemperatureInfo>();
     }
 }

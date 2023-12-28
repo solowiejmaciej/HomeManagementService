@@ -1,4 +1,4 @@
-namespace HomeManagementService.Workers;
+namespace HomeManagementService.Models.MqttMessages;
 
 public record ButtonMessage
 {

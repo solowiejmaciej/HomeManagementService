@@ -1,4 +1,4 @@
-namespace HomeManagementService.Models;
+namespace HomeManagementService.Models.MqttMessages;
 
 public record RotaryMessage
 {
